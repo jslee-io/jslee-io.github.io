@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Java·Spring 백엔드 개발자 이진석의 포트폴리오">
+<title>이진석 | Java·Spring 백엔드 개발자</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* 라이트 색상 */
+:root {
+  --paper: #f4f6f9;
+  --surface: #ffffff;
+  --ink: #18212d;
+  --ink-soft: #4d5967;
+  --rule: #d8dee6;
+  --link: #24607f;
+  --quote-bg: #eaf1f5;
+  --track: #e3e8ee;
+  --seg-work: #2f6f8f;
+  --seg-lunch: #d6a03c;
+  --seg-mtg: #6b58a6;
+  --seg-edu: #b5546a;
+  --seg-vac: #4c8a5a;
+  --seg-muted: #9aa8b6;
+  --seg-text: #ffffff;
+  --seg-lunch-text: #2a2108;
+  --btn-bg: #ffffff;
+  --btn-active: #18212d;
+  --btn-active-text: #ffffff;
+  --band-bg: #172230;
+  --band-card: #1e2b3a;
+  --band-ink: #f1f4f8;
+  --band-soft: #a9b6c5;
+  --band-rule: #2e3c4d;
+}
+/* 다크 색상, 시스템 설정을 따름 */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #11161d;
+    --surface: #171e27;
+    --ink: #e5eaf0;
+    --ink-soft: #a1acb9;
+    --rule: #2c3643;
+    --link: #7fb8d6;
+    --quote-bg: #1b2833;
+    --track: #232c37;
+    --seg-work: #3d82a5;
+    --seg-lunch: #d9a647;
+    --seg-mtg: #8370bf;
+    --seg-edu: #c9687e;
+    --seg-vac: #5a9d69;
+    --seg-muted: #5d6b7a;
+    --seg-text: #ffffff;
+    --seg-lunch-text: #2a2108;
+    --btn-bg: #171e27;
+    --btn-active: #e5eaf0;
+    --btn-active-text: #11161d;
+    --band-bg: #0b1016;
+    --band-card: #141c26;
+    --band-ink: #eef2f6;
+    --band-soft: #9eabba;
+    --band-rule: #263240;
+  }
+}
+/* 다크 색상, 직접 지정 */
+:root[data-theme="dark"] {
+  --paper: #11161d;
+  --surface: #171e27;
+  --ink: #e5eaf0;
+  --ink-soft: #a1acb9;
+  --rule: #2c3643;
+  --link: #7fb8d6;
+  --quote-bg: #1b2833;
+  --track: #232c37;
+  --seg-work: #3d82a5;
+  --seg-lunch: #d9a647;
+  --seg-mtg: #8370bf;
+  --seg-edu: #c9687e;
+  --seg-vac: #5a9d69;
+  --seg-muted: #5d6b7a;
+  --seg-text: #ffffff;
+  --seg-lunch-text: #2a2108;
+  --btn-bg: #171e27;
+  --btn-active: #e5eaf0;
+  --btn-active-text: #11161d;
+  --band-bg: #0b1016;
+  --band-card: #141c26;
+  --band-ink: #eef2f6;
+  --band-soft: #9eabba;
+  --band-rule: #263240;
+}
+
+:root {
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+html { scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 72px); scroll-behavior: smooth; }
+*, *::before, *::after { box-sizing: inherit; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+a { color: var(--link); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--link); outline-offset: 3px; border-radius: 4px; }
+h2, h3, h4 { letter-spacing: -0.01em; }
+
+.site-head {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 10;
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+}
+.site-head .inner { max-width: 1080px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.site-head .home { font-weight: 700; color: var(--ink); text-decoration: none; }
+.site-head nav { display: flex; gap: 20px; overflow-x: auto; }
+.site-head nav a { color: var(--ink-soft); text-decoration: none; font-size: 15px; white-space: nowrap; }
+.site-head nav a:hover { color: var(--ink); }
+
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+.band { background: var(--band-bg); color: var(--band-ink); }
+.band .inner { max-width: 1080px; margin: 0 auto; padding: 88px 24px 80px; display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 48px; align-items: center; }
+.band .who { margin: 0 0 20px; font-size: 16px; color: var(--band-soft); }
+.band .who strong { color: var(--band-ink); font-weight: 600; margin-right: 10px; }
+.band h1 { font-size: 50px; line-height: 1.22; letter-spacing: -0.03em; margin: 0 0 20px; font-weight: 700; }
+.band .lead { font-size: 18px; line-height: 1.75; color: var(--band-soft); max-width: 31em; margin: 0 0 32px; }
+.proof { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 32px; margin: 0 0 36px; padding: 24px 0 0; border-top: 1px solid var(--band-rule); }
+.proof div { margin: 0; }
+.proof dt { font-size: 21px; font-weight: 700; color: var(--band-ink); letter-spacing: -0.01em; }
+.proof dd { margin: 2px 0 0; font-size: 14px; color: var(--band-soft); }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.actions a { display: inline-block; padding: 10px 18px; border-radius: 6px; font-size: 15px; font-weight: 600; text-decoration: none; border: 1px solid var(--band-rule); color: var(--band-ink); }
+.actions a:hover { border-color: var(--band-soft); }
+.actions a.primary { background: var(--band-ink); color: var(--band-bg); border-color: var(--band-ink); }
+.actions a:focus-visible { outline-color: var(--band-ink); }
+.live { background: var(--band-card); border: 1px solid var(--band-rule); border-radius: 10px; padding: 24px; }
+.live .live-title { margin: 0 0 4px; font-size: 14px; color: var(--band-soft); }
+.live .live-step { margin: 0 0 16px; font-size: 18px; font-weight: 600; min-height: 1.5em; }
+.live .bar { background: var(--band-rule); }
+.live .bar .seg { border-right-color: var(--band-card); }
+.live .ticks { color: var(--band-soft); }
+.live .live-note { margin: 14px 0 0; font-size: 14px; color: var(--band-soft); min-height: 3.4em; }
+.live .stage { height: 150px; display: flex; flex-direction: column; justify-content: center; }
+.live .stage > [hidden] { display: none; }
+.live .slots { grid-template-columns: 3.2em repeat(8, minmax(30px, 1fr)); min-width: 0; font-size: 12px; }
+.live .slots > div { border-bottom-color: var(--band-rule); padding: 6px 1px; }
+.live .slots .head, .live .slots .label, .live .slots .rate.off { color: var(--band-soft); }
+.live .slots .cell { border-right-color: var(--band-card); border-bottom-color: var(--band-card); }
+.live .day-rate strong { color: var(--band-ink); font-size: 24px; }
+.live .day-rate span { color: var(--band-soft); }
+
+.strengths { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 48px; row-gap: 0; }
+.strengths > li { border-top: 2px solid var(--ink); padding-top: 16px; margin-bottom: 32px; display: grid; grid-row: span 3; grid-template-rows: subgrid; align-content: start; }
+.strengths h3 { font-size: 20px; margin: 0 0 8px; }
+.strengths p { margin: 0 0 12px; color: var(--ink-soft); font-size: 15px; }
+.strengths .proof-links { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 15px; font-weight: 500; }
+
+section.block { padding: 64px 0; border-top: 1px solid var(--rule); }
+section.block > h2 { font-size: 30px; margin: 0 0 8px; }
+section.block > .sub { margin: 0 0 36px; color: var(--ink-soft); max-width: 40em; }
+
+.gantt { list-style: none; margin: 0; padding: 0; }
+.gantt li { display: grid; grid-template-columns: 13em minmax(0, 1fr); gap: 16px; align-items: start; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.gantt li:last-child { border-bottom: 0; }
+.gantt .lane { padding-top: 2px; }
+.gantt .key { margin: 8px 0 0; font-size: 15px; }
+.gantt .name { font-size: 15px; }
+.gantt .name a { color: var(--ink); text-decoration: none; }
+.gantt .name a:hover { text-decoration: underline; }
+.gantt .name span { display: block; font-size: 13px; color: var(--ink-soft); }
+.gantt .track { position: relative; height: 18px; background-color: var(--track); background-image: linear-gradient(to right, var(--rule) 1px, transparent 1px); background-size: 12.5% 100%; border-radius: 4px; }
+.gantt .seg { position: absolute; top: 0; bottom: 0; border-radius: 4px; background: var(--seg-muted); min-width: 6px; }
+.gantt .seg.main { background: var(--seg-work); }
+.gantt-years { display: grid; grid-template-columns: 13em minmax(0, 1fr); gap: 16px; }
+.gantt-years .scale { position: relative; height: 24px; font-size: 13px; color: var(--ink-soft); }
+.gantt-years .scale span { position: absolute; top: 4px; }
+.gantt-note { margin: 16px 0 0; font-size: 14px; color: var(--ink-soft); }
+
+.case { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 48px; padding: 40px 0; border-top: 1px solid var(--rule); }
+.case:first-of-type { border-top: 0; padding-top: 0; }
+.case h3 { font-size: 23px; margin: 0 0 14px; }
+.resume-line { margin: 0 0 20px; padding: 12px 16px; background: var(--quote-bg); border-left: 3px solid var(--link); border-radius: 0 6px 6px 0; font-size: 15px; font-weight: 500; }
+.case h4 { font-size: 15px; margin: 18px 0 4px; color: var(--ink-soft); font-weight: 600; }
+.case p { margin: 0; }
+.case ul { margin: 0; padding-left: 1.2em; }
+.case ul li + li { margin-top: 4px; }
+.case ul.steps, .case ul.rows, .case ul.stack { padding-left: 0; }
+.case ul.steps { margin: 0 0 16px; }
+.case ul.steps li + li, .case ul.stack li + li { margin-top: 0; }
+.panel { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 24px; align-self: start; }
+.panel h5 { font-size: 15px; margin: 0 0 12px; font-weight: 600; }
+.panel .caption { margin: 12px 0 0; font-size: 14px; color: var(--ink-soft); }
+
+.steps { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 16px; padding: 0; list-style: none; }
+.steps button { font: inherit; font-size: 14px; padding: 6px 12px; border: 1px solid var(--rule); border-radius: 6px; background: var(--btn-bg); color: var(--ink); cursor: pointer; }
+.steps button[aria-pressed="true"] { background: var(--btn-active); color: var(--btn-active-text); border-color: var(--btn-active); }
+.bar { position: relative; height: 48px; border-radius: 6px; overflow: hidden; background: var(--track); }
+.bar .seg { position: absolute; top: 0; bottom: 0; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; color: var(--seg-text); border-right: 2px solid var(--surface); white-space: nowrap; overflow: hidden; transition: opacity .25s ease; }
+.bar .seg:last-child { border-right: 0; }
+.bar .seg.narrow { writing-mode: vertical-rl; text-orientation: upright; font-size: 11px; line-height: 1; letter-spacing: 0; }
+.seg.work { background: var(--seg-work); }
+.seg.lunch { background: var(--seg-lunch); color: var(--seg-lunch-text); }
+.seg.mtg { background: var(--seg-mtg); }
+.seg.edu { background: var(--seg-edu); }
+.seg.vac { background: var(--seg-vac); }
+.bar.changing .seg { opacity: .35; }
+.ticks { position: relative; height: 20px; font-size: 12px; color: var(--ink-soft); }
+.ticks span { position: absolute; top: 2px; transform: translateX(-50%); }
+.ticks span.first { transform: none; }
+.ticks span.last { transform: translateX(-100%); }
+.rows { margin: 12px 0 0; padding: 0; list-style: none; font-size: 14px; }
+.rows li { display: grid; grid-template-columns: 8em 1fr; padding: 4px 0; border-top: 1px solid var(--rule); }
+.rows .time { color: var(--ink-soft); }
+.sw { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 8px; }
+.sw.work { background: var(--seg-work); }
+.sw.lunch { background: var(--seg-lunch); }
+.sw.mtg { background: var(--seg-mtg); }
+.sw.edu { background: var(--seg-edu); }
+.sw.vac { background: var(--seg-vac); }
+.bar-label { font-size: 14px; margin: 22px 0 6px; font-weight: 500; }
+.bar-label:first-of-type { margin-top: 0; }
+
+.tbl { width: 100%; border-collapse: collapse; font-size: 14px; }
+.tbl th, .tbl td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.tbl th { color: var(--ink-soft); font-weight: 600; font-size: 13px; }
+.tbl-wrap { overflow-x: auto; }
+.slots { display: grid; grid-template-columns: 3.6em repeat(8, minmax(42px, 1fr)); min-width: 400px; font-size: 13px; }
+.slots > div { padding: 6px 2px; text-align: center; border-bottom: 1px solid var(--rule); }
+.slots .head { color: var(--ink-soft); }
+.slots .label { text-align: left; color: var(--ink-soft); padding-left: 0; }
+.slots .cell { color: var(--seg-text); font-weight: 600; border-right: 2px solid var(--surface); border-bottom-color: var(--surface); }
+.slots .cell.work { background: var(--seg-work); }
+.slots .cell.mtg { background: var(--seg-mtg); }
+.slots .cell.lunch { background: var(--seg-lunch); color: var(--seg-lunch-text); }
+.slots .rate { font-weight: 600; }
+.slots .rate.off { color: var(--ink-soft); font-weight: 400; }
+.day-rate { display: flex; align-items: baseline; gap: 10px; margin: 16px 0 0; }
+.day-rate strong { font-size: 26px; letter-spacing: -0.01em; }
+.day-rate span { font-size: 14px; color: var(--ink-soft); }
+
+.flow { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0; }
+.flow > li { position: relative; padding: 10px 14px; border: 1px solid var(--rule); border-radius: 8px; background: var(--paper); font-size: 14px; }
+.flow > li + li { margin-top: 26px; }
+.flow > li + li::before {
+  content: "";
+  position: absolute;
+  left: 24px;
+  top: -22px;
+  width: 2px;
+  height: 18px;
+  background: var(--ink-soft);
+}
+.flow > li + li::after {
+  content: "";
+  position: absolute;
+  left: 20px;
+  top: -8px;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid var(--ink-soft);
+}
+.flow strong { display: block; font-size: 14px; }
+.flow span { color: var(--ink-soft); font-size: 13px; }
+.flow > li.hot { border-color: var(--seg-work); }
+.compare { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.compare h6 { font-size: 14px; margin: 0 0 10px; font-weight: 600; }
+.stack { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0 0; padding: 0; list-style: none; font-size: 13px; }
+.stack li { padding: 2px 10px; border: 1px solid var(--rule); border-radius: 999px; color: var(--ink-soft); }
+
+.projects { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 24px; row-gap: 0; }
+.project { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 24px; display: grid; grid-row: span 7; grid-template-rows: subgrid; align-content: start; }
+.project .when { font-size: 13px; color: var(--ink-soft); margin: 0 0 4px; }
+.project h3 { font-size: 19px; margin: 0 0 4px; }
+.project .client { margin: 0 0 16px; font-size: 14px; color: var(--ink-soft); }
+.project .resume-line { font-size: 14px; }
+.project ul { margin: 16px 0 0; padding-left: 1.2em; font-size: 14px; }
+.project .ops { margin: 16px 0 0; padding-top: 14px; border-top: 1px solid var(--rule); font-size: 14px; }
+.project .ops strong { display: block; font-size: 13px; color: var(--ink-soft); margin-bottom: 2px; }
+.project .flow { margin-top: 4px; }
+.others { margin: 32px 0 0; }
+.others h3 { font-size: 17px; margin: 0 0 12px; }
+.others dl { margin: 0; display: grid; grid-template-columns: 11em minmax(0, 1fr); gap: 10px 24px; font-size: 15px; }
+.others dt { color: var(--ink-soft); }
+.others dd { margin: 0; }
+
+.docs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.doc { border-top: 2px solid var(--ink); padding-top: 16px; }
+.doc h3 { font-size: 18px; margin: 0 0 6px; }
+.doc p { margin: 0; font-size: 15px; color: var(--ink-soft); }
+
+.skills { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; margin: 0; }
+.skills dt { font-weight: 600; margin: 0 0 6px; }
+.skills dd { margin: 0; color: var(--ink-soft); font-size: 15px; }
+
+.contact { display: flex; flex-wrap: wrap; gap: 12px 40px; font-size: 18px; }
+.contact div span { display: block; font-size: 14px; color: var(--ink-soft); }
+
+.site-foot { padding: 32px 24px 48px; font-size: 13px; color: var(--ink-soft); border-top: 1px solid var(--rule); max-width: 1080px; margin: 0 auto; }
+
+@media (max-width: 900px) {
+  .band .inner, .case { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .band .inner { padding: 56px 24px 48px; }
+  .band h1 { font-size: 36px; }
+  .strengths { grid-template-columns: minmax(0, 1fr); }
+  .strengths > li { margin-bottom: 24px; }
+  .projects, .docs { grid-template-columns: minmax(0, 1fr); }
+  .project { margin-bottom: 20px; }
+  .skills { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .others dl { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  .others dd { margin-bottom: 10px; }
+  .gantt li, .gantt-years { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .gantt li { padding: 14px 0; }
+  .gantt-years .label { display: none; }
+}
+@media (max-width: 560px) {
+  .wrap, .site-head .inner, .band .inner { padding-left: 16px; padding-right: 16px; }
+  .band h1 { font-size: 31px; }
+  .proof dt { font-size: 18px; }
+  .proof { gap: 16px 20px; }
+  .panel, .project { padding: 18px; }
+  .compare { grid-template-columns: minmax(0, 1fr); }
+  .ticks span.minor, .gantt-years .scale span.minor { display: none; }
+  .site-head nav a.opt { display: none; }
+  section.block > h2 { font-size: 26px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .bar .seg { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-head">
+  <div class="inner">
+    <a class="home" href="#top">이진석</a>
+    <nav aria-label="페이지 메뉴">
+      <a href="#timeline">경력</a>
+      <a href="#work">주요 작업</a>
+      <a href="#projects" class="opt">운영 서비스</a>
+      <a href="#docs">코드와 문서</a>
+      <a href="#contact">연락처</a>
+    </nav>
+  </div>
+</header>
+
+<section class="band" id="top">
+  <div class="inner">
+    <div>
+      <p class="who"><strong>이진석</strong>Java·Spring 백엔드 개발자</p>
+      <h1>틀리면 바로 드러나는<br>데이터를 다룹니다</h1>
+      <p class="lead">근무표 시간, 휴가 시간, 입장권 잔여수량, 콜 통계처럼 한 칸만 어긋나도 현장에서 바로 문제가 되는 업무를 2019년부터 Java·Spring으로 만들고 운영해 왔습니다.</p>
+      <dl class="proof">
+        <div><dt>7년 7개월</dt><dd>업무 시스템과 앱 백엔드 개발·운영</dd></div>
+        <div><dt>운영 서비스 3곳</dt><dd>화담숲, 혼다, 협회 개발 후 운영까지 담당</dd></div>
+        <div><dt>스케줄·통계 담당</dt><dd>WFM 6인 개발팀에서 맡은 영역</dd></div>
+        <div><dt>2초 주기</dt><dd>CTI 실시간 데이터 수신 API</dd></div>
+      </dl>
+      <div class="actions">
+        <a class="primary" href="#timeline">경력 한눈에 보기</a>
+        <a href="mailto:95jinseok@naver.com">이메일 보내기</a>
+        <a href="https://github.com/jslee-io">GitHub</a>
+      </div>
+    </div>
+
+    <div class="live" aria-label="근무표 구간 재구성 예시">
+      <p class="live-title" id="liveTitle">근무표 구간 재구성</p>
+      <p class="live-step" id="liveStep"></p>
+      <div class="stage">
+        <div id="liveSched">
+          <div class="bar" id="liveBar" role="img" aria-label=""></div>
+          <div class="ticks" aria-hidden="true">
+            <span class="first" style="left:0%">09:00</span>
+            <span style="left:33.33%">12:00</span>
+            <span style="left:66.67%">15:00</span>
+            <span class="last" style="left:100%">18:00</span>
+          </div>
+        </div>
+        <div id="liveRate" hidden>
+          <div class="slots" role="table" aria-label="시간대별 근무활동과 이행률 예시">
+            <div class="head label">시간</div>
+            <div class="head">09:00</div><div class="head">09:30</div><div class="head">10:00</div><div class="head">10:30</div>
+            <div class="head">11:00</div><div class="head">11:30</div><div class="head">12:00</div><div class="head">12:30</div>
+            <div class="label">활동</div>
+            <div class="cell work">상담</div><div class="cell work">상담</div><div class="cell work">상담</div><div class="cell work">상담</div>
+            <div class="cell work">상담</div><div class="cell mtg">회의</div><div class="cell mtg">회의</div><div class="cell lunch">점심</div>
+            <div class="label">이행률</div>
+            <div class="rate">92.4</div><div class="rate">88.1</div><div class="rate">96.0</div><div class="rate">85.3</div>
+            <div class="rate">81.7</div><div class="rate off">제외</div><div class="rate off">제외</div><div class="rate off">제외</div>
+          </div>
+          <p class="day-rate"><strong>88.7%</strong><span>상담 칸 기준 이행률</span></p>
+        </div>
+      </div>
+      <p class="live-note" id="liveNote"></p>
+    </div>
+  </div>
+</section>
+
+<main class="wrap">
+
+  <!-- 막대 위치는 2019년 1월부터 2026년 12월까지 96개월 기준 비율 -->
+  <section class="block" id="timeline">
+    <h2>경력 한눈에</h2>
+    <p class="sub">2019년부터 참여한 프로젝트와 각각에서 한 일입니다. 이름을 누르면 자세한 내용으로 이동합니다.</p>
+
+    <div class="gantt-years" aria-hidden="true">
+      <div class="label"></div>
+      <div class="scale">
+        <span style="left:0%">2019</span>
+        <span class="minor" style="left:12.5%">2020</span>
+        <span style="left:25%">2021</span>
+        <span class="minor" style="left:37.5%">2022</span>
+        <span style="left:50%">2023</span>
+        <span class="minor" style="left:62.5%">2024</span>
+        <span style="left:75%">2025</span>
+        <span class="minor" style="left:87.5%">2026</span>
+      </div>
+    </div>
+    <ul class="gantt">
+      <li>
+        <div class="name"><a href="#work">DB손해보험 WFM 시스템 구축</a><span>2025.11 ~ 2026.10 개발</span></div>
+        <div class="lane"><div class="track"><div class="seg main" style="left:85.42%;width:12.5%"></div></div><p class="key">근무표 구간 재구성과 휴가 반영 로직, 근무 이행률과 콜통계 화면, CTI 실시간 수신 API</p></div>
+      </li>
+      <li>
+        <div class="name"><a href="#proj-edu">간호조무사협회 교육 서비스</a><span>2023.04 ~ 2025.11 개발·운영</span></div>
+        <div class="lane"><div class="track"><div class="seg main" style="left:53.13%;width:33.33%"></div></div><p class="key">수강 여부와 추가금을 따지는 교육 변경 규칙 구현, 교육 신청·결제 서비스 운영</p></div>
+      </li>
+      <li>
+        <div class="name"><a href="#others">배포 자동화·AWS</a><span>2023.01 ~ 2025.11</span></div>
+        <div class="lane"><div class="track"><div class="seg" style="left:50%;width:36.46%"></div></div><p class="key">GitLab·Jenkins 기반 사내 배포 자동화 구축, AWS CodeDeploy 배포 구성</p></div>
+      </li>
+      <li>
+        <div class="name"><a href="#others">현대엘리베이터 Android 앱</a><span>2022.05 ~ 2022.06</span></div>
+        <div class="lane"><div class="track"><div class="seg" style="left:41.67%;width:2.08%"></div></div><p class="key">저사양 기기 메모리 부족을 이미지 로딩 방식 변경으로 해결</p></div>
+      </li>
+      <li>
+        <div class="name"><a href="#proj-honda">혼다 My Honda 앱 백엔드</a><span>2022.04 ~ 2025.11 개발·운영</span></div>
+        <div class="lane"><div class="track"><div class="seg main" style="left:40.63%;width:45.83%"></div></div><p class="key">정비 예약을 기존 시스템과 서비스센터에 연계, 소셜 로그인 3사 연동, 백엔드 운영</p></div>
+      </li>
+      <li>
+        <div class="name"><a href="#others">신세계푸드 구내식당 앱</a><span>2021.11 ~ 2022.03</span></div>
+        <div class="lane"><div class="track"><div class="seg" style="left:35.42%;width:5.21%"></div></div><p class="key">사업장별 식단 조회와 칼로리 합산 웹뷰 앱의 화면과 백엔드 개발</p></div>
+      </li>
+      <li>
+        <div class="name"><a href="#others">봉제·금형 협업지원시스템</a><span>2021.05 ~ 2021.10</span></div>
+        <div class="lane"><div class="track"><div class="seg" style="left:29.17%;width:6.25%"></div></div><p class="key">작업지시서 PDF 생성, 송장번호로 배송 진행 조회</p></div>
+      </li>
+      <li>
+        <div class="name"><a href="#proj-hwadam">화담숲 통합영업시스템</a><span>2019.04 ~ 2021.05 개발·운영</span></div>
+        <div class="lane"><div class="track"><div class="seg main" style="left:3.13%;width:27.08%"></div></div><p class="key">홈페이지와 POS·키오스크의 입장권 잔여수량 실시간 연동, 예약·발권·결제 운영</p></div>
+      </li>
+    </ul>
+    <p class="gantt-note">진한 막대는 아래에서 자세히 다루는 주요 프로젝트입니다.</p>
+  </section>
+
+  <section class="block" id="strengths">
+    <h2>강점</h2>
+    <p class="sub">네 가지 모두 아래 주요 작업과 운영해 온 서비스에서 실제 사례로 확인할 수 있습니다.</p>
+    <ol class="strengths">
+      <li>
+        <h3>업무 규칙을 서버 로직으로 옮깁니다</h3>
+        <p>여러 조건이 얽힌 규칙을 빠짐없이 코드로 옮기고, 경계가 되는 경우까지 처리합니다.</p>
+        <div class="proof-links"><a href="#case-schedule">근무표 구간 재구성</a><a href="#case-vacation">휴가 반영 규칙</a><a href="#proj-edu">교육 변경 규칙</a></div>
+      </li>
+      <li>
+        <h3>서비스를 오래 운영해 왔습니다</h3>
+        <p>개발로 끝내지 않고 오픈 이후 유지보수와 개선, 결제와 알림 연동 관리, 배포 자동화까지 맡아 서비스를 이어 왔습니다.</p>
+        <div class="proof-links"><a href="#proj-hwadam">화담숲</a><a href="#proj-honda">혼다</a><a href="#proj-edu">협회</a><a href="#others">배포 자동화</a></div>
+      </li>
+      <li>
+        <h3>레거시를 분석해 새 시스템으로 옮깁니다</h3>
+        <p>기존 화면과 쿼리를 읽어 의도를 파악하고, 새 구조에서 같은 결과가 나오는지 대조합니다.</p>
+        <div class="proof-links"><a href="#case-migration">AS-IS 분석과 통계 대조</a></div>
+      </li>
+      <li>
+        <h3>운영 중 문제의 원인을 끝까지 찾습니다</h3>
+        <p>증상에서 멈추지 않고 데이터 흐름을 따라가 원인을 확인한 뒤 고칩니다.</p>
+        <div class="proof-links"><a href="#case-defect">결함 원인 추적</a><a href="#case-cti">수신 API 구조 변경</a></div>
+      </li>
+    </ol>
+  </section>
+
+  <section class="block" id="work">
+    <h2>주요 작업</h2>
+    <p class="sub">DB손해보험 WFM(콜센터 상담사 근무관리) 시스템 구축에서 개발자 6명 중 스케줄 관리(이행률 포함)와 통계(실시간 포함) 영역을 맡았습니다. Nexacro N24 화면, Spring 서비스, MyBatis와 Oracle SQL까지 직접 개발했습니다.</p>
+
+    <article class="case" id="case-schedule">
+      <div>
+        <h3>근무표 활동 구간 재구성</h3>
+        <p class="resume-line">신규 활동 시간에 맞춰 기존 근무활동을 분할하고 앞뒤 잔여 구간을 보존하는 시간 구간 재구성 로직 개발</p>
+        <h4>상황</h4>
+        <p>상담사 근무표는 기본 근무 위에 점심, 회의 같은 활동이 겹쳐 들어옵니다. 관리자가 30분 단위 시간표에 활동을 끌어다 놓으면, 하나의 입력이 여러 기존 활동에 동시에 걸칩니다.</p>
+        <h4>한 일</h4>
+        <ul>
+          <li>겹친 활동마다 신규 활동 앞뒤로 남는 시간을 원래 활동으로 보존하도록 서버에서 구간을 다시 구성</li>
+          <li>근무활동 상세가 시작 시각 기준으로 한 건만 존재하는 구조에 맞춰, 시작 시각이 같으면 기존 행을 삭제하고 새 행을 삽입</li>
+          <li>여러 행의 삭제·삽입을 한 처리 단위로 묶어 중간 오류 시 전체 롤백</li>
+        </ul>
+        <ul class="stack" aria-label="담당 범위">
+          <li>Nexacro 화면</li><li>Spring 서비스</li><li>MyBatis</li><li>Oracle</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h5>직접 눌러 보기</h5>
+        <ul class="steps">
+          <li><button type="button" data-step="1">기본 근무</button></li>
+          <li><button type="button" data-step="2">점심 추가</button></li>
+          <li><button type="button" data-step="3">회의 추가</button></li>
+          <li><button type="button" data-step="edu">교육 추가</button></li>
+        </ul>
+        <div class="bar" id="bar" role="img" aria-label=""></div>
+        <div class="ticks" aria-hidden="true">
+          <span class="first" style="left:0%">09:00</span>
+          <span style="left:33.33%">12:00</span>
+          <span style="left:66.67%">15:00</span>
+          <span class="last" style="left:100%">18:00</span>
+        </div>
+        <ul class="rows" id="rows"></ul>
+        <p class="caption" id="note"></p>
+      </div>
+    </article>
+
+    <article class="case" id="case-vacation">
+      <div>
+        <h3>휴가를 반영한 스케줄 생성</h3>
+        <p class="resume-line">반차·반반차·종일휴가를 근무시간 구간에 반영하는 스케줄 생성 로직 개발</p>
+        <h4>상황</h4>
+        <p>사원마다 소정근로시간이 달라 반차 시간을 고정값으로 쓸 수 없었습니다. 하루에 휴가가 여러 건 들어오고, 오전·오후 휴가 사이에 점심이 끼어 시간이 이어지지 않는 경우도 있었습니다.</p>
+        <h4>한 일</h4>
+        <ul>
+          <li>반차 시간을 사원별 소정근로시간 절반으로 계산하고, 오전은 30분 단위 내림, 오후는 올림으로 맞춤</li>
+          <li>종일 여부를 시간 연속이 아니라 일자별 휴가 시간 합계로 판정</li>
+          <li>종일휴가 처리를 근무 상세 전체 삭제에서, 근무시간만큼 휴가 구간을 등록하는 방식으로 변경</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h5>소정근로시간별 반차 시간</h5>
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <thead><tr><th>소정근로</th><th>오전반차</th><th>오후반차</th><th>반반차</th></tr></thead>
+            <tbody>
+              <tr><td>8시간</td><td>4시간</td><td>4시간</td><td>2시간</td></tr>
+              <tr><td>10.5시간</td><td>5시간 (내림)</td><td>5.5시간 (올림)</td><td>2시간</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="bar-label" style="margin-top:20px">오전반차 + 오후반반차 (8시간 근무)</p>
+        <div class="bar" role="img" aria-label="09시부터 12시 휴가, 12시부터 13시 점심, 13시부터 14시 휴가, 14시부터 16시 상담, 16시부터 18시 휴가">
+          <div class="seg vac" style="left:0%;width:33.33%">휴가</div>
+          <div class="seg lunch" style="left:33.33%;width:11.11%">점심</div>
+          <div class="seg vac" style="left:44.44%;width:11.11%">휴가</div>
+          <div class="seg work" style="left:55.56%;width:22.22%">상담</div>
+          <div class="seg vac" style="left:77.78%;width:22.22%">휴가</div>
+        </div>
+        <p class="bar-label">오전반차 + 오후반차 (합계 8시간, 종일휴가로 판정)</p>
+        <div class="bar" role="img" aria-label="09시부터 18시까지 휴가 한 구간">
+          <div class="seg vac" style="left:0%;width:100%">휴가</div>
+        </div>
+        <p class="caption">점심은 근무시간이 아니므로 차감하지 않습니다. 두 휴가가 떨어져 있어도 합계가 소정근로시간 이상이면 종일휴가입니다.</p>
+      </div>
+    </article>
+
+    <article class="case" id="case-adherence">
+      <div>
+        <h3>근무 이행률 현황</h3>
+        <p class="resume-line">30분 단위로 스케줄된 근무활동과 실제 상담 실적을 맞대어 상담사별 근무 이행률을 보여주는 통계 화면 개발</p>
+        <h4>상황</h4>
+        <p>관리자는 상담사가 스케줄대로 일했는지를 시간대별로 확인해야 합니다. 스케줄은 근무표에, 실제 상담 실적은 CTI에서 15분 단위로 쌓여 두 데이터의 기준이 서로 달랐습니다.</p>
+        <h4>한 일</h4>
+        <ul>
+          <li>30분 칸마다 그 시간의 근무활동과 상담 실적을 맞대어 이행률을 산출. 스케줄상 상담 시간 대비 수신, 발신, 대기 같은 상담 실적 시간으로 계산</li>
+          <li>15분 단위 실적을 30분 칸으로 묶고, 자정을 넘는 야간조 실적은 근무일 기준으로 귀속</li>
+          <li>시간대별 화면에서 일자별 조직·개인 화면, 가중평균으로 낸 월 평균까지 같은 기준으로 확장</li>
+          <li>300초 걸리던 조회 쿼리의 반복 실행 구조를 찾아 개선하고, 환경마다 이행률 일부가 비던 원인을 중복행과 순서에 의존한 변환 로직으로 규명해 수정</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h5>시간대별 이행률</h5>
+        <div class="tbl-wrap">
+          <div class="slots" role="table" aria-label="시간대별 근무활동과 이행률 예시">
+            <div class="head label">시간</div>
+            <div class="head">09:00</div><div class="head">09:30</div><div class="head">10:00</div><div class="head">10:30</div>
+            <div class="head">11:00</div><div class="head">11:30</div><div class="head">12:00</div><div class="head">12:30</div>
+            <div class="label">활동</div>
+            <div class="cell work">상담</div><div class="cell work">상담</div><div class="cell work">상담</div><div class="cell mtg">코칭</div>
+            <div class="cell work">상담</div><div class="cell lunch">점심</div><div class="cell lunch">점심</div><div class="cell work">상담</div>
+            <div class="label">이행률</div>
+            <div class="rate">92.4</div><div class="rate">88.1</div><div class="rate">96.0</div><div class="rate off">제외</div>
+            <div class="rate">81.7</div><div class="rate off">제외</div><div class="rate off">제외</div><div class="rate">90.2</div>
+          </div>
+        </div>
+        <p class="day-rate"><strong>89.7%</strong><span>상담 칸 기준 하루 이행률</span></p>
+        <p class="caption">이행률은 상담 실적 시간을 스케줄상 상담 시간으로 나눈 값입니다. 코칭 같은 타업무와 점심은 상담 시간이 아니므로 계산에서 빠집니다. 숫자는 가상의 예시입니다.</p>
+      </div>
+    </article>
+
+    <article class="case" id="case-defect">
+      <div>
+        <h3>운영 결함 원인 추적</h3>
+        <p class="resume-line">운영 중 발생한 결함을 데이터 흐름을 따라 추적해 원인을 확인하고 수정</p>
+        <h4>접근 방식</h4>
+        <p>화면에서 보이는 증상만 막지 않고, 화면이 서버로 보내는 데이터와 서버가 짝짓는 기준, DB 조건까지 따라가 실제 원인을 확인한 뒤 고쳤습니다.</p>
+      </div>
+      <div class="panel">
+        <h5>증상, 원인, 수정</h5>
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <thead><tr><th>증상</th><th>원인</th><th>수정</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>여러 날짜에 같은 변경을 일괄 적용하면 일부 날짜만 저장됨</td>
+                <td>변경 전후 데이터를 짝짓는 키에 근무일자가 빠져 다른 날짜끼리 묶임</td>
+                <td>근무일자를 포함한 키로 변경</td>
+              </tr>
+              <tr>
+                <td>30분 칸 하나에 10분 단위 활동이 여러 건이면 일부가 화면에서 사라짐</td>
+                <td>조회 결과를 시간표로 바꾸는 Java 로직이 같은 칸 데이터를 덮어씀</td>
+                <td>같은 칸의 활동을 모두 표시하도록 변환 로직 수정</td>
+              </tr>
+              <tr>
+                <td>활동 재등록 시 PK 중복 오류</td>
+                <td>삭제 조건이 테이블 PK와 맞지 않아 기존 행이 남음</td>
+                <td>삭제 조건을 PK 기준으로 맞추고 재삽입 전 선삭제</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </article>
+
+    <article class="case" id="case-cti">
+      <div>
+        <h3>CTI 데이터 수신 API 구조 변경</h3>
+        <p class="resume-line">건별 DB 저장 완료 후 응답하던 구조를 Spring @Async 기반으로 변경하여 요청 접수 응답과 저장 작업 분리</p>
+        <h4>상황</h4>
+        <p>외부 CTI 업체가 2초·15분 주기로 상담사 통화·통계 데이터를 JSON으로 보냅니다. 대량 데이터를 모두 저장한 뒤 응답하다 보니, 앞 요청이 끝나기 전에 다음 요청이 계속 들어와 응답 지연과 메모리 부족 오류가 발생했습니다.</p>
+        <h4>한 일</h4>
+        <ul>
+          <li>@Async로 요청 접수 응답과 DB 저장을 분리</li>
+          <li>운영 확인용으로 수신 원문을 설정값에 따라 저장하고 조회하는 로그 기능 개발</li>
+        </ul>
+        <h4>지금 다시 한다면</h4>
+        <p>비동기 작업이 쌓이지 않도록 스레드 풀 크기와 대기열 상한을 두고, 저장 실패 건을 기록해 다시 처리할 수 있게 하겠습니다.</p>
+      </div>
+      <div class="panel">
+        <div class="compare">
+          <div>
+            <h6>변경 전</h6>
+            <ol class="flow">
+              <li><strong>CTI 업체 요청</strong><span>2초마다 데이터 전송</span></li>
+              <li class="hot"><strong>건별 MERGE 반복</strong><span>전부 끝날 때까지 대기</span></li>
+              <li><strong>응답</strong><span>다음 요청이 앞 작업 위에 쌓임</span></li>
+            </ol>
+          </div>
+          <div>
+            <h6>변경 후</h6>
+            <ol class="flow">
+              <li><strong>CTI 업체 요청</strong><span>2초마다 데이터 전송</span></li>
+              <li class="hot"><strong>접수 응답</strong><span>저장을 기다리지 않음</span></li>
+              <li><strong>@Async 저장</strong><span>별도 스레드에서 MERGE</span></li>
+            </ol>
+          </div>
+        </div>
+        <p class="caption">응답은 접수 결과이고 저장 완료를 뜻하지 않습니다. 그래서 수신 원문 로그로 운영 중 확인할 수 있게 했습니다.</p>
+      </div>
+    </article>
+
+    <article class="case" id="case-migration">
+      <div>
+        <h3>AS-IS 분석과 통계 쿼리 이관</h3>
+        <p class="resume-line">AS-IS(MiPlatform) 화면 및 쿼리 분석을 통한 Nexacro N24 기반 TO-BE 시스템 이관</p>
+        <h4>한 일</h4>
+        <ul>
+          <li>시간대·기간·조직·스킬별 콜통계와 실시간 상담원 모니터링 화면의 Oracle 쿼리 작성</li>
+          <li>AS-IS 쿼리의 산식을 분석해 TO-BE 테이블 구조로 옮기고, 같은 조건의 결과값을 대조해 차이를 수정</li>
+          <li>근무가 자정을 넘는 야간근무의 일자 기준 집계 처리</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h5>이관 절차</h5>
+        <ol class="flow">
+          <li><strong>AS-IS 화면과 쿼리 분석</strong><span>지표별 산식과 조건 파악</span></li>
+          <li><strong>TO-BE 구조로 재작성</strong><span>새 테이블 기준 Oracle 쿼리</span></li>
+          <li class="hot"><strong>결과값 대조</strong><span>같은 기간·조건으로 AS-IS와 비교</span></li>
+          <li><strong>차이 원인 수정</strong><span>산식, 분모, 일자 기준 맞춤</span></li>
+        </ol>
+      </div>
+    </article>
+  </section>
+
+  <section class="block" id="projects">
+    <h2>운영해 온 서비스</h2>
+    <p class="sub">WFM 이전에 개발부터 오픈 이후 운영까지 이어서 맡았던 서비스입니다.</p>
+
+    <div class="projects">
+      <article class="project" id="proj-edu">
+        <p class="when">2023.04 ~ 2025.11</p>
+        <h3>교육 서비스</h3>
+        <p class="client">간호조무사협회</p>
+        <p class="resume-line">수강 진행 여부에 따른 변경 제한, 교육 변경 시 추가금 발생 등 협회 업무 규칙을 반영한 처리 로직 구현</p>
+        <ol class="flow">
+          <li><strong>변경 요청</strong><span>온라인·대면 간 변경, 서로 전환</span></li>
+          <li class="hot"><strong>수강 진행 여부 확인</strong><span>이미 수강 중이면 변경 제한</span></li>
+          <li><strong>추가금 여부 판단</strong><span>발생하는 경우 규칙에 맞게 처리</span></li>
+        </ol>
+        <ul><li>온라인·대면 교육 간 변경과 전환 기능 개선</li></ul>
+        <p class="ops"><strong>운영</strong>교육 신청·결제 유지보수, 온라인 수강 솔루션 운영, 신청 케이스별 조건과 처리 흐름 보완</p>
+      </article>
+
+      <article class="project" id="proj-honda">
+        <p class="when">2022.04 ~ 2025.11</p>
+        <h3>My Honda 앱 백엔드</h3>
+        <p class="client">혼다자동차</p>
+        <p class="resume-line">정비 예약 신청을 혼다 기존 시스템 및 서비스센터와 연계하는 기능 구현</p>
+        <ol class="flow">
+          <li><strong>앱(웹뷰)</strong><span>정비 예약, 차량, 쿠폰</span></li>
+          <li class="hot"><strong>Java·Spring 백엔드</strong><span>소셜 로그인 3사, 푸시 알림</span></li>
+          <li><strong>기존 시스템·서비스센터</strong><span>예약 신청 연계</span></li>
+        </ol>
+        <ul><li>네이버·카카오·구글 로그인 연동, 로그인 상태 유지와 최근 로그인 수단 안내</li></ul>
+        <p class="ops"><strong>운영</strong>개발 이후 2025년 11월까지 백엔드 운영, MS SQL Server 쿼리 작성·수정, 푸시 알림 발송 기능 운영</p>
+      </article>
+
+      <article class="project" id="proj-hwadam">
+        <p class="when">2019.04 ~ 2021.05</p>
+        <h3>통합영업시스템</h3>
+        <p class="client">화담숲(LG상록재단)</p>
+        <p class="resume-line">.NET에서 Oracle을 호출하여 온라인 예약과 현장 구매의 입장권 수량을 연계·관리하는 기능 구현</p>
+        <ol class="flow">
+          <li><strong>홈페이지 예약 (JSP)</strong><span>현장 판매가 반영된 잔여수량 실시간 표시</span></li>
+          <li class="hot"><strong>잔여수량 연동</strong><span>온라인 Oracle 기준으로 양쪽 수량을 맞춤</span></li>
+          <li><strong>현장 POS·키오스크 (.NET)</strong><span>로컬 MS SQL Server, Oracle 직접 호출</span></li>
+        </ol>
+        <ul>
+          <li>홈페이지 예약 화면을 JSP로 구축하고, 현장 판매와 잔여수량이 어긋나지 않도록 실시간 연동</li>
+          <li>현장 POS·키오스크의 구매·결제·발권 기능 개발</li>
+        </ul>
+        <p class="ops"><strong>운영</strong>예약·발권·결제·매표소 시스템 운영, 판매 건수와 정산 정보 연계, 알림톡·토스 결제 연동 관리</p>
+      </article>
+    </div>
+
+    <div class="others" id="others">
+      <h3>그 밖의 작업</h3>
+      <dl>
+        <dt>2023.01 ~ 2025.11</dt>
+        <dd>GitLab·Jenkins 기반 사내 Tomcat 배포 자동화 구축, AWS CodeDeploy 배포 구성, S3 파일 제공 기능</dd>
+        <dt>2022.05 ~ 2022.06</dt>
+        <dd>현대엘리베이터 Android 앱: 저사양 기기 메모리 부족에 대응해 썸네일은 저해상도, 확대 시에만 원본으로 로딩</dd>
+        <dt>2021.11 ~ 2022.03</dt>
+        <dd>신세계푸드 구내식당 메뉴 앱: JSP 화면과 Spring 백엔드, 식단 조회와 칼로리 합산 화면</dd>
+        <dt>2021.05 ~ 2021.10</dt>
+        <dd>봉제·금형 협업지원시스템: 작업지시서 PDF 생성, 송장번호 기반 배송 조회</dd>
+      </dl>
+    </div>
+  </section>
+
+  <section class="block" id="docs">
+    <h2>코드와 문서</h2>
+    <p class="sub">회사 소스는 공개할 수 없어, 실무 규칙을 새로 구현한 예제와 정리한 문서로 대신합니다.</p>
+    <div class="docs">
+      <div class="doc">
+        <h3><a href="https://github.com/jslee-io/work-schedule-core">work-schedule-core</a></h3>
+        <p>근무표 구간 재구성과 휴가 반영을 Java 17로 구현한 예제입니다. 처리 규칙을 JUnit 5 테스트 21개로 고정했습니다.</p>
+      </div>
+      <div class="doc">
+        <h3><a href="https://github.com/jslee-io/career/blob/main/career.md">경력기술서</a></h3>
+        <p>프로젝트별 담당 업무와 주요 작업을 문장으로 정리했습니다.</p>
+      </div>
+      <div class="doc">
+        <h3><a href="https://github.com/jslee-io/career/blob/main/cases/01-wfm-schedule.md">사례 문서</a></h3>
+        <p>근무표 재구성과 휴가 반영 사례를 상황, 문제, 해결, 돌아본 점 순서로 정리했습니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="skills">
+    <h2>기술</h2>
+    <dl class="skills">
+      <div><dt>Backend</dt><dd>Java, Spring Framework, 전자정부프레임워크, MyBatis</dd></div>
+      <div><dt>Database</dt><dd>Oracle, MS SQL Server, MariaDB</dd></div>
+      <div><dt>Frontend</dt><dd>Nexacro N24, JSP, JavaScript</dd></div>
+      <div><dt>DevOps</dt><dd>GitLab, SVN, Jenkins, Tomcat, AWS(CodeDeploy, S3)</dd></div>
+    </dl>
+  </section>
+
+  <section class="block" id="contact">
+    <h2>연락처</h2>
+    <div class="contact">
+      <div><span>이메일</span><a href="mailto:95jinseok@naver.com">95jinseok@naver.com</a></div>
+      <div><span>GitHub</span><a href="https://github.com/jslee-io">github.com/jslee-io</a></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-foot">
+  포트폴리오 용도로 직접 작성한 페이지입니다. 시간표 그림의 데이터는 가상의 예시입니다.
+</footer>
+
+<script>
+(function () {
+  // 근무 시작과 종료 시각을 분 단위로 둔다
+  var DAY_STR = 540;
+  var DAY_FIN = 1080;
+
+  var objBar = document.getElementById('bar');
+  var objRows = document.getElementById('rows');
+  var objNote = document.getElementById('note');
+  var arrBtn = document.querySelectorAll('.steps button');
+
+  // 겹친 기존 활동은 신규 활동 앞뒤로 남는 시간만 원래 활동으로 보존한다
+  function fnApply(arrSchedule, objNew) {
+    var arrResult = [];
+    for (var i = 0; i < arrSchedule.length; i++) {
+      var objRow = arrSchedule[i];
+
+      // 경계만 맞닿는 경우도 겹치지 않는 것으로 본다
+      if (!(objRow.str < objNew.fin && objNew.str < objRow.fin)) {
+        arrResult.push(objRow);
+        continue;
+      }
+      if (objRow.str < objNew.str) {
+        arrResult.push({ name: objRow.name, kind: objRow.kind, str: objRow.str, fin: objNew.str });
+      }
+      if (objRow.fin > objNew.fin) {
+        arrResult.push({ name: objRow.name, kind: objRow.kind, str: objNew.fin, fin: objRow.fin });
+      }
+    }
+    arrResult.push(objNew);
+    arrResult.sort(function (a, b) { return a.str - b.str; });
+    return arrResult;
+  }
+
+  function fnRun(strStep) {
+    var arrSchedule = [{ name: '상담', kind: 'work', str: DAY_STR, fin: DAY_FIN }];
+    var strNote = '09:00부터 18:00까지 기본 상담 근무 한 구간입니다.';
+
+    if (strStep !== '1') {
+      arrSchedule = fnApply(arrSchedule, { name: '점심', kind: 'lunch', str: 720, fin: 780 });
+      strNote = '점심 12:00~13:00이 들어오면 상담이 앞뒤로 나뉘고, 남는 시간은 상담으로 유지됩니다.';
+    }
+    if (strStep === '3' || strStep === 'edu') {
+      arrSchedule = fnApply(arrSchedule, { name: '회의', kind: 'mtg', str: 690, fin: 750 });
+      strNote = '회의 11:30~12:30은 상담과 점심 두 활동에 걸칩니다. 각 활동에서 회의와 겹치지 않는 시간만 남습니다.';
+    }
+    if (strStep === 'edu') {
+      // 교육은 하루 단위 활동이라 근무시간 전체를 덮는다
+      arrSchedule = fnApply(arrSchedule, { name: '교육', kind: 'edu', str: DAY_STR, fin: DAY_FIN });
+      strNote = '교육은 하루 단위로 잡히는 활동입니다. 교육이 들어오면 상담, 점심, 회의가 모두 사라지고 근무시간 전체가 교육 한 구간이 됩니다.';
+    }
+
+    var strBar = '';
+    var strRows = '';
+    var arrLabel = [];
+    for (var i = 0; i < arrSchedule.length; i++) {
+      var objRow = arrSchedule[i];
+      var nLeft = ((objRow.str - DAY_STR) / (DAY_FIN - DAY_STR)) * 100;
+      var nWidth = ((objRow.fin - objRow.str) / (DAY_FIN - DAY_STR)) * 100;
+      var strStr = (objRow.str < 600 ? '0' : '') + Math.floor(objRow.str / 60) + ':' + (objRow.str % 60 < 10 ? '0' : '') + (objRow.str % 60);
+      var strFin = (objRow.fin < 600 ? '0' : '') + Math.floor(objRow.fin / 60) + ':' + (objRow.fin % 60 < 10 ? '0' : '') + (objRow.fin % 60);
+
+      // 40분 미만 구간은 글자를 세로로 세워 좁은 칸에도 이름이 보이게 한다
+      var strNarrow = (objRow.fin - objRow.str) < 40 ? ' narrow' : '';
+      strBar += '<div class="seg ' + objRow.kind + strNarrow + '" style="left:' + nLeft + '%;width:' + nWidth + '%">' + objRow.name + '</div>';
+      strRows += '<li><span class="time">' + strStr + ' ~ ' + strFin + '</span><span><i class="sw ' + objRow.kind + '" aria-hidden="true"></i>' + objRow.name + '</span></li>';
+      arrLabel.push(strStr + '부터 ' + strFin + '까지 ' + objRow.name);
+    }
+
+    objBar.classList.add('changing');
+    setTimeout(function () {
+      objBar.innerHTML = strBar;
+      objBar.setAttribute('aria-label', arrLabel.join(', '));
+      objBar.classList.remove('changing');
+    }, 120);
+    objRows.innerHTML = strRows;
+    objNote.textContent = strNote;
+
+    for (var b = 0; b < arrBtn.length; b++) {
+      arrBtn[b].setAttribute('aria-pressed', arrBtn[b].getAttribute('data-step') === strStep ? 'true' : 'false');
+    }
+  }
+
+  for (var n = 0; n < arrBtn.length; n++) {
+    arrBtn[n].addEventListener('click', function () {
+      fnRun(this.getAttribute('data-step'));
+    });
+  }
+
+  fnRun('3');
+
+  // 첫 화면 그림은 단계를 일정 간격으로 넘기며 보여준다
+  var objLiveBar = document.getElementById('liveBar');
+  var objLiveTitle = document.getElementById('liveTitle');
+  var objLiveSched = document.getElementById('liveSched');
+  var objLiveRate = document.getElementById('liveRate');
+  var objLiveStep = document.getElementById('liveStep');
+  var objLiveNote = document.getElementById('liveNote');
+  var nLiveIdx = 0;
+
+  function fnPlayLive() {
+    var arrSchedule = [{ name: '상담', kind: 'work', str: DAY_STR, fin: DAY_FIN }];
+    var arrTitle = ['기본 근무', '점심 추가', '회의 추가', '시간대별 이행률'];
+    var arrNote = [
+      '09:00부터 18:00까지 상담 한 구간입니다.',
+      '점심이 들어오면 상담이 앞뒤로 나뉘고 남는 시간은 상담으로 유지됩니다.',
+      '회의가 상담과 점심에 걸치면 겹친 부분만 잘리고 나머지는 그대로 남습니다.',
+      '30분 칸마다 상담 실적을 맞대어 이행률을 냅니다. 회의와 점심은 계산에서 빠집니다.'
+    ];
+    if (nLiveIdx >= 1) arrSchedule = fnApply(arrSchedule, { name: '점심', kind: 'lunch', str: 720, fin: 780 });
+    if (nLiveIdx >= 2) arrSchedule = fnApply(arrSchedule, { name: '회의', kind: 'mtg', str: 690, fin: 750 });
+
+    var strBar = '';
+    var arrLabel = [];
+    for (var i = 0; i < arrSchedule.length; i++) {
+      var objRow = arrSchedule[i];
+      var nLeft = ((objRow.str - DAY_STR) / (DAY_FIN - DAY_STR)) * 100;
+      var nWidth = ((objRow.fin - objRow.str) / (DAY_FIN - DAY_STR)) * 100;
+      var strNarrow = (objRow.fin - objRow.str) < 40 ? ' narrow' : '';
+      strBar += '<div class="seg ' + objRow.kind + strNarrow + '" style="left:' + nLeft + '%;width:' + nWidth + '%">' + objRow.name + '</div>';
+      arrLabel.push(objRow.name);
+    }
+    objLiveBar.innerHTML = strBar;
+    objLiveBar.setAttribute('aria-label', arrLabel.join(', '));
+    objLiveStep.textContent = arrTitle[nLiveIdx];
+    objLiveNote.textContent = arrNote[nLiveIdx];
+
+    // 마지막 장면은 막대 대신 이행률 표를 보여준다
+    objLiveTitle.textContent = nLiveIdx === 3 ? '근무 이행률 현황' : '근무표 구간 재구성';
+    objLiveSched.hidden = nLiveIdx === 3;
+    objLiveRate.hidden = nLiveIdx !== 3;
+    nLiveIdx = (nLiveIdx + 1) % 4;
+  }
+
+  // 움직임 줄이기 설정이면 마지막 단계에서 멈춘다
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    nLiveIdx = 2;
+    fnPlayLive();
+  } else {
+    fnPlayLive();
+    setInterval(fnPlayLive, 3600);
+  }
+})();
+</script>
+</body>
+</html>
