@@ -245,6 +245,12 @@ section.block > .sub { margin: 0 0 36px; color: var(--ink-soft); max-width: 40em
 .slots .cell.work { background: var(--seg-work); }
 .slots .cell.mtg { background: var(--seg-mtg); }
 .slots .cell.lunch { background: var(--seg-lunch); color: var(--seg-lunch-text); }
+.slots .cell.mix { background: linear-gradient(to right, var(--seg-mtg) 33.3%, var(--seg-work) 33.3%); font-size: 10px; line-height: 1.3; display: flex; align-items: center; justify-content: center; }
+.avg-compare { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; margin: 16px 0 0; }
+.avg-compare > div { display: flex; flex-direction: column; gap: 2px; }
+.avg-compare strong { font-size: 26px; letter-spacing: -0.01em; line-height: 1.2; }
+.avg-compare span { font-size: 13px; color: var(--ink-soft); }
+.avg-compare .avg-sub strong { color: var(--ink-soft); font-weight: 500; }
 .slots .rate { font-weight: 600; }
 .slots .rate.off { color: var(--ink-soft); font-weight: 400; }
 .day-rate { display: flex; align-items: baseline; gap: 10px; margin: 16px 0 0; }
@@ -401,7 +407,7 @@ section.block > .sub { margin: 0 0 36px; color: var(--ink-soft); max-width: 40em
             <div class="rate">92.4</div><div class="rate">88.1</div><div class="rate">96.0</div><div class="rate">85.3</div>
             <div class="rate">81.7</div><div class="rate off">제외</div><div class="rate off">제외</div><div class="rate off">제외</div>
           </div>
-          <p class="day-rate"><strong>88.7%</strong><span>상담 칸 기준 이행률</span></p>
+          <p class="day-rate"><strong>88.7%</strong><span>실적 시간 합계 기준 이행률</span></p>
         </div>
       </div>
       <p class="live-note" id="liveNote"></p>
@@ -507,6 +513,8 @@ section.block > .sub { margin: 0 0 36px; color: var(--ink-soft); max-width: 40em
         <ul>
           <li>겹친 활동마다 신규 활동 앞뒤로 남는 시간을 원래 활동으로 보존하도록 서버에서 구간을 다시 구성</li>
           <li>근무활동 상세가 시작 시각 기준으로 한 건만 존재하는 구조에 맞춰, 시작 시각이 같으면 기존 행을 삭제하고 새 행을 삽입</li>
+          <li>빈 칸이나 기본 근무 밖에 넣은 연장근무 같은 활동은 신규로 등록하고, 같은 활동을 같은 자리에 다시 넣으면 막음</li>
+          <li>철야조 근무표가 시각 기준 정렬로 순서가 뒤집히던 문제를 날짜를 포함한 일시 기준 정렬로 수정</li>
           <li>여러 행의 삭제·삽입을 한 처리 단위로 묶어 중간 오류 시 전체 롤백</li>
         </ul>
         <ul class="stack" aria-label="담당 범위">
@@ -538,22 +546,22 @@ section.block > .sub { margin: 0 0 36px; color: var(--ink-soft); max-width: 40em
         <h3>휴가를 반영한 스케줄 생성</h3>
         <p class="resume-line">반차·반반차·종일휴가를 근무시간 구간에 반영하는 스케줄 생성 로직 개발</p>
         <h4>상황</h4>
-        <p>사원마다 소정근로시간이 달라 반차 시간을 고정값으로 쓸 수 없었습니다. 하루에 휴가가 여러 건 들어오고, 오전·오후 휴가 사이에 점심이 끼어 시간이 이어지지 않는 경우도 있었습니다.</p>
+        <p>철야조는 소정근로시간이 주간과 달라 반차 시간을 고정값으로 쓸 수 없었습니다. 하루에 휴가가 여러 건 들어오고, 오전·오후 휴가 사이에 점심이 끼어 시간이 이어지지 않는 경우도 있었습니다.</p>
         <h4>한 일</h4>
         <ul>
-          <li>반차 시간을 사원별 소정근로시간 절반으로 계산하고, 오전은 30분 단위 내림, 오후는 올림으로 맞춤</li>
+          <li>철야조는 반차 시간을 소정근로시간 절반으로 계산하고, 오전은 30분 단위 내림, 오후는 올림으로 맞춤</li>
           <li>종일 여부를 시간 연속이 아니라 일자별 휴가 시간 합계로 판정</li>
           <li>종일휴가 처리를 근무 상세 전체 삭제에서, 근무시간만큼 휴가 구간을 등록하는 방식으로 변경</li>
         </ul>
       </div>
       <div class="panel">
-        <h5>소정근로시간별 반차 시간</h5>
+        <h5>근무 형태별 반차 시간</h5>
         <div class="tbl-wrap">
           <table class="tbl">
             <thead><tr><th>소정근로</th><th>오전반차</th><th>오후반차</th><th>반반차</th></tr></thead>
             <tbody>
-              <tr><td>8시간</td><td>4시간</td><td>4시간</td><td>2시간</td></tr>
-              <tr><td>10.5시간</td><td>5시간 (내림)</td><td>5.5시간 (올림)</td><td>2시간</td></tr>
+              <tr><td>8시간 주간</td><td>4시간</td><td>4시간</td><td>2시간</td></tr>
+              <tr><td>10.5시간 철야조</td><td>5시간 (내림)</td><td>5.5시간 (올림)</td><td>2시간</td></tr>
             </tbody>
           </table>
         </div>
@@ -583,8 +591,8 @@ section.block > .sub { margin: 0 0 36px; color: var(--ink-soft); max-width: 40em
         <ul>
           <li>30분 칸마다 그 시간의 근무활동과 상담 실적을 맞대어 이행률을 산출. 스케줄상 상담 시간 대비 수신, 발신, 대기 같은 상담 실적 시간으로 계산</li>
           <li>15분 단위 실적을 30분 칸으로 묶고, 자정을 넘는 야간조 실적은 근무일 기준으로 귀속</li>
-          <li>시간대별 화면에서 일자별 조직·개인 화면, 가중평균으로 낸 월 평균까지 같은 기준으로 확장</li>
-          <li>300초 걸리던 조회 쿼리의 반복 실행 구조를 찾아 개선하고, 환경마다 이행률 일부가 비던 원인을 중복행과 순서에 의존한 변환 로직으로 규명해 수정</li>
+          <li>일자와 월 이행률은 칸 이행률의 단순 평균이 아니라 실적 시간 합계를 상담 시간 합계로 나눈 가중평균으로 산출하고, 시간대별 화면에서 일자별 조직·개인 화면과 월 평균까지 같은 기준으로 확장</li>
+          <li>300초 걸리던 조회 쿼리에서 같은 계산이 반복 실행되는 구조를 찾아 20초 이내로 단축하고, 환경마다 이행률 일부가 비던 원인을 중복행과 순서에 의존한 변환 로직으로 규명해 수정</li>
         </ul>
       </div>
       <div class="panel">
@@ -595,15 +603,18 @@ section.block > .sub { margin: 0 0 36px; color: var(--ink-soft); max-width: 40em
             <div class="head">09:00</div><div class="head">09:30</div><div class="head">10:00</div><div class="head">10:30</div>
             <div class="head">11:00</div><div class="head">11:30</div><div class="head">12:00</div><div class="head">12:30</div>
             <div class="label">활동</div>
-            <div class="cell work">상담</div><div class="cell work">상담</div><div class="cell work">상담</div><div class="cell mtg">코칭</div>
+            <div class="cell work">상담</div><div class="cell work">상담</div><div class="cell work">상담</div><div class="cell mix">코칭·상담</div>
             <div class="cell work">상담</div><div class="cell lunch">점심</div><div class="cell lunch">점심</div><div class="cell work">상담</div>
             <div class="label">이행률</div>
-            <div class="rate">92.4</div><div class="rate">88.1</div><div class="rate">96.0</div><div class="rate off">제외</div>
+            <div class="rate">92.4</div><div class="rate">88.1</div><div class="rate">96.0</div><div class="rate">55.0</div>
             <div class="rate">81.7</div><div class="rate off">제외</div><div class="rate off">제외</div><div class="rate">90.2</div>
           </div>
         </div>
-        <p class="day-rate"><strong>89.7%</strong><span>상담 칸 기준 하루 이행률</span></p>
-        <p class="caption">이행률은 상담 실적 시간을 스케줄상 상담 시간으로 나눈 값입니다. 코칭 같은 타업무와 점심은 상담 시간이 아니므로 계산에서 빠집니다. 숫자는 가상의 예시입니다.</p>
+        <div class="avg-compare">
+          <div class="avg-main"><strong>85.6%</strong><span>하루 이행률, 실적 시간 합계를 상담 시간 합계로 나눈 값</span></div>
+          <div class="avg-sub"><strong>83.9%</strong><span>칸 이행률을 단순 평균한 값</span></div>
+        </div>
+        <p class="caption">10:30 칸은 코칭 10분과 상담 20분이 섞여 상담 시간이 20분뿐입니다. 칸 이행률을 그냥 평균하면 이 칸이 30분 칸과 같은 무게로 계산되므로, 일자와 월 이행률은 실적 시간 합계를 상담 시간 합계로 나눠 산출했습니다. 숫자는 가상의 예시입니다.</p>
       </div>
     </article>
 
@@ -773,7 +784,7 @@ section.block > .sub { margin: 0 0 36px; color: var(--ink-soft); max-width: 40em
     <div class="docs">
       <div class="doc">
         <h3><a href="https://github.com/jslee-io/work-schedule-core">work-schedule-core</a></h3>
-        <p>근무표 구간 재구성과 휴가 반영을 Java 17로 구현한 예제입니다. 처리 규칙을 JUnit 5 테스트 21개로 고정했습니다.</p>
+        <p>근무표 구간 재구성과 휴가 반영을 Java 17로 구현한 예제입니다. 처리 규칙을 JUnit 5 테스트 25개로 고정했습니다.</p>
       </div>
       <div class="doc">
         <h3><a href="https://github.com/jslee-io/career/blob/main/career.md">경력기술서</a></h3>
@@ -950,7 +961,7 @@ section.block > .sub { margin: 0 0 36px; color: var(--ink-soft); max-width: 40em
     fnPlayLive();
   } else {
     fnPlayLive();
-    setInterval(fnPlayLive, 3600);
+    setInterval(fnPlayLive, 3000);
   }
 })();
 </script>
