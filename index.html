@@ -199,6 +199,7 @@ section.block > .sub { margin: 0 0 36px; color: var(--ink-soft); max-width: 40em
 .case ul li + li { margin-top: 4px; }
 .case ul.steps, .case ul.rows, .case ul.stack { padding-left: 0; }
 .case ul.steps { margin: 0 0 16px; }
+.stack.work-stack { margin: -16px 0 44px; }
 .case ul.steps li + li, .case ul.stack li + li { margin-top: 0; }
 .panel { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 24px; align-self: start; }
 .panel h5 { font-size: 15px; margin: 0 0 12px; font-weight: 600; }
@@ -259,21 +260,21 @@ section.block > .sub { margin: 0 0 36px; color: var(--ink-soft); max-width: 40em
 
 .flow { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0; }
 .flow > li { position: relative; padding: 10px 14px; border: 1px solid var(--rule); border-radius: 8px; background: var(--paper); font-size: 14px; }
-.flow > li + li { margin-top: 26px; }
+.flow > li + li { margin-top: 30px; }
 .flow > li + li::before {
   content: "";
   position: absolute;
   left: 24px;
-  top: -22px;
+  top: -26px;
   width: 2px;
-  height: 18px;
+  height: 14px;
   background: var(--ink-soft);
 }
 .flow > li + li::after {
   content: "";
   position: absolute;
   left: 20px;
-  top: -8px;
+  top: -12px;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
   border-top: 6px solid var(--ink-soft);
@@ -287,7 +288,7 @@ section.block > .sub { margin: 0 0 36px; color: var(--ink-soft); max-width: 40em
 .stack li { padding: 2px 10px; border: 1px solid var(--rule); border-radius: 999px; color: var(--ink-soft); }
 
 .projects { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 24px; row-gap: 0; }
-.project { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 24px; display: grid; grid-row: span 7; grid-template-rows: subgrid; align-content: start; }
+.project { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 24px; display: grid; grid-row: span 8; grid-template-rows: subgrid; align-content: start; }
 .project .when { font-size: 13px; color: var(--ink-soft); margin: 0 0 4px; }
 .project h3 { font-size: 19px; margin: 0 0 4px; }
 .project .client { margin: 0 0 16px; font-size: 14px; color: var(--ink-soft); }
@@ -295,6 +296,7 @@ section.block > .sub { margin: 0 0 36px; color: var(--ink-soft); max-width: 40em
 .project ul { margin: 16px 0 0; padding-left: 1.2em; font-size: 14px; }
 .project .ops { margin: 16px 0 0; padding-top: 14px; border-top: 1px solid var(--rule); font-size: 14px; }
 .project .ops strong { display: block; font-size: 13px; color: var(--ink-soft); margin-bottom: 2px; }
+.project ul.stack { margin: 16px 0 0; padding-left: 0; font-size: 12px; }
 .project .flow { margin-top: 4px; }
 .others { margin: 32px 0 0; }
 .others h3 { font-size: 17px; margin: 0 0 12px; }
@@ -502,6 +504,9 @@ section.block > .sub { margin: 0 0 36px; color: var(--ink-soft); max-width: 40em
   <section class="block" id="work">
     <h2>주요 작업</h2>
     <p class="sub">DB손해보험 WFM(콜센터 상담사 근무관리) 시스템 구축에서 개발자 6명 중 스케줄 관리(이행률 포함)와 통계(실시간 포함) 영역을 맡았습니다. Nexacro N24 화면, Spring 서비스, MyBatis와 Oracle SQL까지 직접 개발했습니다.</p>
+    <ul class="stack work-stack" aria-label="사용 기술">
+      <li>Nexacro N24</li><li>Java</li><li>Spring Framework</li><li>전자정부프레임워크</li><li>MyBatis</li><li>Oracle</li>
+    </ul>
 
     <article class="case" id="case-schedule">
       <div>
@@ -516,9 +521,6 @@ section.block > .sub { margin: 0 0 36px; color: var(--ink-soft); max-width: 40em
           <li>빈 칸이나 기본 근무 밖에 넣은 연장근무 같은 활동은 신규로 등록하고, 같은 활동을 같은 자리에 다시 넣으면 막음</li>
           <li>철야조 근무표가 시각 기준 정렬로 순서가 뒤집히던 문제를 날짜를 포함한 일시 기준 정렬로 수정</li>
           <li>여러 행의 삭제·삽입을 한 처리 단위로 묶어 중간 오류 시 전체 롤백</li>
-        </ul>
-        <ul class="stack" aria-label="담당 범위">
-          <li>Nexacro 화면</li><li>Spring 서비스</li><li>MyBatis</li><li>Oracle</li>
         </ul>
       </div>
       <div class="panel">
@@ -729,6 +731,7 @@ section.block > .sub { margin: 0 0 36px; color: var(--ink-soft); max-width: 40em
         </ol>
         <ul><li>온라인·대면 교육 간 변경과 전환 기능 개선</li></ul>
         <p class="ops"><strong>운영</strong>교육 신청·결제 유지보수, 온라인 수강 솔루션 운영, 신청 케이스별 조건과 처리 흐름 보완</p>
+        <ul class="stack" aria-label="사용 기술"><li>Java</li><li>JSP</li><li>JavaScript</li><li>전자정부프레임워크</li><li>Oracle</li></ul>
       </article>
 
       <article class="project" id="proj-honda">
@@ -742,7 +745,8 @@ section.block > .sub { margin: 0 0 36px; color: var(--ink-soft); max-width: 40em
           <li><strong>기존 시스템·서비스센터</strong><span>예약 신청 연계</span></li>
         </ol>
         <ul><li>네이버·카카오·구글 로그인 연동, 로그인 상태 유지와 최근 로그인 수단 안내</li></ul>
-        <p class="ops"><strong>운영</strong>개발 이후 2025년 11월까지 백엔드 운영, MS SQL Server 쿼리 작성·수정, 푸시 알림 발송 기능 운영</p>
+        <p class="ops"><strong>운영</strong>개발 이후 2025년 11월까지 백엔드 운영, MSSQL 쿼리 작성·수정, 푸시 알림 발송 기능 운영</p>
+        <ul class="stack" aria-label="사용 기술"><li>Java</li><li>Spring Framework</li><li>Oracle</li><li>MSSQL</li></ul>
       </article>
 
       <article class="project" id="proj-hwadam">
@@ -753,13 +757,14 @@ section.block > .sub { margin: 0 0 36px; color: var(--ink-soft); max-width: 40em
         <ol class="flow">
           <li><strong>홈페이지 예약 (JSP)</strong><span>현장 판매가 반영된 잔여수량 실시간 표시</span></li>
           <li class="hot"><strong>잔여수량 연동</strong><span>온라인 Oracle 기준으로 양쪽 수량을 맞춤</span></li>
-          <li><strong>현장 POS·키오스크 (.NET)</strong><span>로컬 MS SQL Server, Oracle 직접 호출</span></li>
+          <li><strong>현장 POS·키오스크 (.NET)</strong><span>로컬 MSSQL, Oracle 직접 호출</span></li>
         </ol>
         <ul>
           <li>홈페이지 예약 화면을 JSP로 구축하고, 현장 판매와 잔여수량이 어긋나지 않도록 실시간 연동</li>
           <li>현장 POS·키오스크의 구매·결제·발권 기능 개발</li>
         </ul>
         <p class="ops"><strong>운영</strong>예약·발권·결제·매표소 시스템 운영, 판매 건수와 정산 정보 연계, 알림톡·토스 결제 연동 관리</p>
+        <ul class="stack" aria-label="사용 기술"><li>Java</li><li>JSP</li><li>전자정부프레임워크</li><li>.NET(C#)</li><li>Oracle</li><li>MSSQL</li></ul>
       </article>
     </div>
 
@@ -801,7 +806,7 @@ section.block > .sub { margin: 0 0 36px; color: var(--ink-soft); max-width: 40em
     <h2>기술</h2>
     <dl class="skills">
       <div><dt>Backend</dt><dd>Java, Spring Framework, 전자정부프레임워크, MyBatis</dd></div>
-      <div><dt>Database</dt><dd>Oracle, MS SQL Server, MariaDB</dd></div>
+      <div><dt>Database</dt><dd>Oracle, MSSQL, MariaDB</dd></div>
       <div><dt>Frontend</dt><dd>Nexacro N24, JSP, JavaScript</dd></div>
       <div><dt>DevOps</dt><dd>GitLab, SVN, Jenkins, Tomcat, AWS(CodeDeploy, S3)</dd></div>
     </dl>
